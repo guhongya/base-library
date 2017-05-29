@@ -8,11 +8,16 @@ import android.view.View;
  */
 
 public abstract class BaseViewHolder<D> extends RecyclerView.ViewHolder {
-    public BaseViewHolder(View itemView) {
-        this(itemView,null);
-    }
-    public BaseViewHolder(View itemView,OnItemClickListener onItemClickedListener){
+    public BaseViewHolder(View itemView, final OnItemClickListener onItemClickedListener){
         super(itemView);
+        if(onItemClickedListener!=null){
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemClickedListener.onItemClicked(v,getAdapterPosition());
+                }
+            });
+        }
     }
     public abstract void setData(D d);
 

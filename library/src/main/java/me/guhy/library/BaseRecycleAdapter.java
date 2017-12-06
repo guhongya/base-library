@@ -1,4 +1,4 @@
-package com.wangpupos.library;
+package me.guhy.library;
 
 
 import android.support.v7.util.DiffUtil;
@@ -61,7 +61,7 @@ public class BaseRecycleAdapter<D,V extends BaseViewHolder<D>> extends RecyclerV
 
             @Override
             public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-                return mDatas.get(oldItemPosition)==newDatas.get(newItemPosition);
+                return mDatas.get(oldItemPosition).equals(newDatas.get(newItemPosition));
             }
 
             @Override
@@ -69,6 +69,7 @@ public class BaseRecycleAdapter<D,V extends BaseViewHolder<D>> extends RecyclerV
                 return mDatas.get(oldItemPosition).equals(newDatas.get(newItemPosition));
             }
         },true);
+        mDatas=newDatas;
         result.dispatchUpdatesTo(this);
     }
 

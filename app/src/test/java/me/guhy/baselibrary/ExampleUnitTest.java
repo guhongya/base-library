@@ -1,4 +1,4 @@
-package com.wangpupos.baselibrary;
+package me.guhy.baselibrary;
 
 import org.junit.Test;
 

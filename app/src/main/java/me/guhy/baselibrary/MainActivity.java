@@ -1,20 +1,20 @@
-package com.wangpupos.baselibrary;
+package me.guhy.baselibrary;
 
 import android.databinding.DataBindingUtil;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.Toast;
 
-import com.wangpupos.baselibrary.databinding.ActivityMainBinding;
-import com.wangpupos.baselibrary.databinding.ItemRecycleBinding;
-import com.wangpupos.library.BaseRecycleAdapter;
-import com.wangpupos.library.BaseViewHolder;
-import com.wangpupos.library.IViewHolderFactory;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import me.guhy.baselibrary.databinding.ActivityMainBinding;
+import me.guhy.baselibrary.databinding.ItemRecycleBinding;
+import me.guhy.library.BaseRecycleAdapter;
+import me.guhy.library.BaseViewHolder;
+import me.guhy.library.IViewHolderFactory;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding mMainBing;

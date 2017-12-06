@@ -1,4 +1,4 @@
-package com.wangpupos.library;
+package me.guhy.library;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -10,41 +10,37 @@ import java.util.List;
  * Created by GUHY on 2017/5/8.
  */
 
-public class HeaderAdapter  extends RecyclerView.Adapter{
+public class FooterAdapter extends RecyclerView.Adapter {
     private RecyclerView.Adapter mAdapter;
-    private List<View> mHeaders;
-
-    public HeaderAdapter(List<View> headers){
-        this.mHeaders=headers;
+    List<View> footers;
+    public FooterAdapter(RecyclerView.Adapter original,List<View> footers){
+        this.mAdapter=original;
+        this.footers=footers;
     }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if(viewType<mHeaders.size()){
-            return new CommonViewHolder(mHeaders.get(viewType));
-        }
-        else {
-            return mAdapter.onCreateViewHolder(parent, viewType-mHeaders.size());
+        if(mAdapter.getItemCount()>0&&viewType<mAdapter.getItemCount()){
+            return mAdapter.onCreateViewHolder(parent,viewType);
+        }else{
+            return new CommonViewHolder(footers.get(viewType-mAdapter.getItemCount()-1));
         }
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        mAdapter.onBindViewHolder(holder,position);
+        if(position<mAdapter.getItemCount()&&mAdapter.getItemCount()>0){
+            mAdapter.onBindViewHolder(holder,position);
+        }
     }
 
-    @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position, List payloads) {
-        mAdapter.onBindViewHolder(holder, position, payloads);
-    }
 
     @Override
     public int getItemViewType(int position) {
-        if(position>=mHeaders.size()){
-            return mHeaders.size()+mAdapter.getItemViewType(position);
+        if(position<mAdapter.getItemCount()&&mAdapter.getItemCount()>0) {
+            return mAdapter.getItemViewType(position);
         }else{
-            return position;
+            return position+1;
         }
-
     }
 
     @Override
@@ -59,34 +55,37 @@ public class HeaderAdapter  extends RecyclerView.Adapter{
 
     @Override
     public int getItemCount() {
-        return mAdapter.getItemCount()+mHeaders.size();
+        return mAdapter.getItemCount()==0?footers.size():mAdapter.getItemCount()+footers.size();
     }
 
     @Override
     public void onViewRecycled(RecyclerView.ViewHolder holder) {
-        if(holder.getAdapterPosition()>=mHeaders.size()) {
+        if(mAdapter.getItemCount()>0&&holder.getAdapterPosition()<mAdapter.getItemCount()) {
             mAdapter.onViewRecycled(holder);
         }
     }
 
     @Override
     public boolean onFailedToRecycleView(RecyclerView.ViewHolder holder) {
-        if(holder.getAdapterPosition()>=mHeaders.size())
+        if(holder.getAdapterPosition()<mAdapter.getItemCount()&&mAdapter.getItemCount()>0) {
             return mAdapter.onFailedToRecycleView(holder);
-        else
+        }else {
             return false;
+        }
     }
 
     @Override
     public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
-        if(holder.getAdapterPosition()>=mHeaders.size())
-        mAdapter.onViewAttachedToWindow(holder);
+        if(holder.getAdapterPosition()<mAdapter.getItemCount()&&mAdapter.getItemCount()>0) {
+            mAdapter.onViewAttachedToWindow(holder);
+        }
     }
 
     @Override
     public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
-        if(holder.getAdapterPosition()>=mHeaders.size())
-        mAdapter.onViewDetachedFromWindow(holder);
+        if(holder.getAdapterPosition()<mAdapter.getItemCount()&&mAdapter.getItemCount()>0) {
+            mAdapter.onViewDetachedFromWindow(holder);
+        }
     }
 
     @Override
@@ -108,4 +107,6 @@ public class HeaderAdapter  extends RecyclerView.Adapter{
     public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
         mAdapter.onDetachedFromRecyclerView(recyclerView);
     }
+
+
 }
